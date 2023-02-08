@@ -45,6 +45,55 @@ router.get("/:user", withAuth, async (req, res) => {
     }
   });
 
+  router.get("/addPost", async (req, res) => {
+    return res.render("add-post", {
+      user_id: req.session.user,
+      loggedIn: req.session.loggedIn,
+    });
+  });
+
+  //create a new post
+  router.post("/addPost", withAuth, async (req, res) => {
+    try {
+      const dbPostData = await Post.create({
+        title: req.body.title,
+        post_content: req.body.content,
+        user_id: req.session.user,
+      });
+      res.status(200).json(dbPostData);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  });
+  
+
+  router.get("/update/:id" , async (req,res)=> {
+    return res.render("edit-post", {
+      user_id: req.session.user,
+      loggedIn: req.session.loggedIn,
+    });
+  })
+
+  //update a post
+  router.put("/update/:id", withAuth, async (req, res) => {
+    try {
+      const postData = await Post.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(postData);
+      if (!postData) {
+        res.status(404).json({ message: "Not exists " });
+        return;
+      }
+      res.status(200).json(postData);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+  
+
   //Delete a post by its ID
   router.delete("/:id", async (req, res) => {
     try {
