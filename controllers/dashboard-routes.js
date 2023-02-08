@@ -41,4 +41,22 @@ router.get("/:user", withAuth, async (req, res) => {
     }
   });
 
+  //Delete a post by its ID
+  router.delete("/:id", async (req, res) => {
+    try {
+      const postData = await Post.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log("Data to be DELETED: ", postData);
+      if (!postData) {
+        res.status(400).json({ message: "Id does not exist!" });
+        return;
+      }
+      res.status(200).json(postData);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
 module.exports = router;
