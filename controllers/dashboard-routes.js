@@ -6,15 +6,19 @@ router.use(withAuth);
 
 //get all posts for a loggedin user
 router.get('/', async (req, res) => {
+  console.log('------------------')
+  console.log("userid" + req.session.user)
+  console.log('------------------')
+
   try {
     const postData = await Post.findAll({
-      where: { user_id: req.session.user_id },
+      where: { user_id: req.session.user },
     });
     const posts = postData.map((post) => post.get({ plain: true }));
     res.render('dashboard', {
       posts,
       loggedIn: req.session.loggedIn,
-      user_id: req.session.user_id,
+      user_id: req.session.user,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -33,8 +37,8 @@ router.get("/:user", withAuth, async (req, res) => {
       res.render("dashboard", {
         posts,
         loggedIn: req.session.loggedIn,
-        user_id: req.session.user_id,
-        name: req.session.name,
+        user_id: req.session.user,
+        name: req.session.username,
       });
     } catch (error) {
       res.status(500).json(error);

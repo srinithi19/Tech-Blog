@@ -1,0 +1,26 @@
+<section id="dashboard_home">
+{{#each posts as |blog|}}
+{{> userblog-details}}
+{{/each}}
+</section> 
+<section id="add-blog-section" style="display:none;">
+  <div class="login-card" >
+    <h2 class="page-title">Create New Blog</h2>
+    <form class="form addblog-form">
+      <div class="form-group">
+        <label for="addblog-title">Title:</label>
+        <input class="form-input" type="text" id="addblog-title" />
+      </div>
+      <div class="form-group">
+        <label for="addblog-content">Content:</label>
+        <input class="form-input" type="text" id="addblog-content" />
+      </div>
+      
+      <div class="form-group">
+        <button class="btn btn-primary"  id="create-blog" type="submit">Create</button>
+      </div>
+    </form>
+  </div>
+</section>
+<button class="btn btn-primary" id="add-blog">+ New Post</button>
+ <script src="./js/add-blog.js"></script>

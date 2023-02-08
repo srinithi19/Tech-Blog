@@ -4,6 +4,10 @@ const withAuth = require('../utils/auth');
 
 // GET all blogs and render to 'homepage' 
 router.get('/', async (req, res) => {
+    console.log("-------------------")
+    console.log("USER1" + req.session.username);
+    console.log("-------------------")
+
     try {
       const postData = await Post.findAll({
         include: [User],
@@ -12,6 +16,8 @@ router.get('/', async (req, res) => {
       res.render('homepage', {
         posts,
         loggedIn: req.session.loggedIn,
+        user: req.session.user_id,
+        name: req.session.name,
       });
     } catch (err) {
       res.status(500).json(err);
@@ -33,10 +39,6 @@ router.get('/', async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-  });
-
-  router.get('/signup', (req, res) => {
-    res.render('signup');
   });
   
   router.get('/login', (req, res) => {
