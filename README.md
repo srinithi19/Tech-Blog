@@ -48,7 +48,7 @@ Clicking on the title of the post takes you to the post page which displays its 
 ## Links
 
 Github - https://github.com/srinithi19/Tech-Blog <br>
-Heroku - 
+Heroku - https://guarded-sea-42952.herokuapp.com/
 
 
 
