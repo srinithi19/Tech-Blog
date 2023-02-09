@@ -22,4 +22,42 @@ router.post('/comments', async (req, res) => {
     }
   });
 
+  router.get('/edit/:id', async (req, res) => {
+    console.log("------in EDIT--------")
+    try {
+      const postData = await Post.findByPk(req.params.id);
+      if (!postData) {
+        res.status(404).json({ message: 'No post with that id.' });
+        return;
+      }
+      const post = postData.get({ plain: true });
+      res.render('edit-post', { post, loggedIn: req.session.loggedIn });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  //Delete a post by its ID
+  router.delete('/delete/:id', withAuth, async (req, res) => {
+    console.log("-------in DELETE---------")
+    console.log(req.params.id + "-------in DELETE---------")
+
+    try {
+      const postData = await Post.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log("Data to be DELETED: ", postData);
+      if (!postData) {
+        res.status(400).json({ message: "Id does not exist!" });
+        return;
+      }
+      res.status(200).json(postData);
+    } catch (error) {
+      console.log(error)
+      res.status(500).json(error);
+    }
+  });
+
 module.exports = router;

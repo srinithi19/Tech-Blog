@@ -1,8 +1,17 @@
 <section class="card">
   <a href="/dashboard/post/{{id}}">
     <header>
-      <span>
-      {{title}}</span>
-      <span>{{format_date createdAt}}</span></header>
+      <span>{{title}}</span>
+      <span>{{format_date createdAt}}</span>
+    </header>
   </a>
+  <div>
+    <a href="/api/post/edit/{{id}}">Update Post</a><span></span>
+    {{!-- <a href="/api/post/delete/{{id}}">Delete Post</a> --}}
+
+    <button id="delete" data-id="{{id}}">Delete</button>
+          
+  </div>
 </section>
+
+ <script src="/js/edit-post.js"></script>

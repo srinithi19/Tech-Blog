@@ -109,7 +109,8 @@ router.get("/:user", withAuth, async (req, res) => {
   });
 
   //Delete a post by its ID
-  router.delete("/:id", async (req, res) => {
+  router.delete("/delete/:id", withAuth, async (req, res) => {
+    console.log("-------in DELETE---------")
     try {
       const postData = await Post.destroy({
         where: {
