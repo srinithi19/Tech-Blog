@@ -1,6 +1,7 @@
 const deleteButtonHandler = async (event) => {
+    
     event.preventDefault();
-  
+    console.log("=======IN DELETE CONSOLE--------")
     if (event.target.hasAttribute('data-id')) {
       const id = event.target.getAttribute('data-id');
       console.log(id);
@@ -44,7 +45,7 @@ const deleteButtonHandler = async (event) => {
     }
   };
 
-  document.querySelectorAll('#delete').forEach((deleteButton) => {
+  document.querySelectorAll('.deletebtn').forEach((deleteButton) => {
     deleteButton.addEventListener('click', deleteButtonHandler);
   });
   

@@ -38,7 +38,7 @@ router.post('/comments', async (req, res) => {
   });
 
   //Delete a post by its ID
-  router.delete('/delete/:id', withAuth, async (req, res) => {
+  router.get('/delete/:id', withAuth, async (req, res) => {
     console.log("-------in DELETE---------")
     console.log(req.params.id + "-------in DELETE---------")
 
@@ -53,7 +53,16 @@ router.post('/comments', async (req, res) => {
         res.status(400).json({ message: "Id does not exist!" });
         return;
       }
-      res.status(200).json(postData);
+      const dbpostData = await Post.findAll({
+        where: { user_id: req.session.user }});
+    
+      const posts = dbpostData.map((post) => post.get({ plain: true }));
+     
+      res.render('dashboard', {
+        posts,
+        loggedIn: req.session.loggedIn,
+        user_id: req.session.user,
+      });
     } catch (error) {
       console.log(error)
       res.status(500).json(error);
