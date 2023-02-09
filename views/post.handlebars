@@ -1,0 +1,43 @@
+<section class="card">
+    <h2>{{post.title}}</h2>
+    <p>Created by {{post.user.name}} on  {{format_date post.createdAt}}</p>
+</p>
+<div>
+    <p class='text-lg'> content: 
+      {{post.post_content}}
+    </p>
+  </div>
+</section>
+
+{{#if post.comments}}
+  <h2 class='ml-4 '>Comments</h2>
+  {{#each post.comments as |comment|}}
+    <section class='m-4 card'>
+      <div
+        class='flex justify-between'>
+        <h3 class='text-sm'>{{comment.user.name}}
+          <span class='text-black'>wrote on</span>
+          {{format_date comment.createdAt}}</h3>
+      </div>
+      <div>
+        <p class='text-sm'>
+          {{comment.comment}}
+        </p>
+      </div>
+    </section>
+  {{/each}}
+{{/if}}
+
+<section class="card">
+    <h3>Add Comment</h3>
+  <form
+    class='flex m-auto flex-col'
+    id='comment-form'>
+    <textarea id='comment' class='mb-2' required></textarea>
+    <button
+      type='submit'
+      class='self-center bg-yellow-500 hover:bg-yellow-700 p-2 hover:text-white rounded-lg'
+    >Submit</button>
+  </form>
+</section>
+ <script src="/js/comments.js"></script>

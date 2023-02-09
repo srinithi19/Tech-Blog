@@ -92,7 +92,21 @@ router.get("/:user", withAuth, async (req, res) => {
       res.status(500).json(error);
     }
   });
-  
+  router.get('/post/:id', withAuth, async (req, res) => {
+    try {
+      const postData = await Post.findByPk(req.params.id, {
+        include: [{ model: User }, { model: Comment, include: [User] }],
+      });
+      if (!postData) {
+        res.status(404).json({ message: 'No post with that id.' });
+        return;
+      }
+      const post = postData.get({ plain: true });
+      res.render('post', { post, loggedIn: req.session.loggedIn });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
   //Delete a post by its ID
   router.delete("/:id", async (req, res) => {
