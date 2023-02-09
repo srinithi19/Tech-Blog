@@ -60,4 +60,25 @@ router.post('/comments', async (req, res) => {
     }
   });
 
+  //update a post
+  router.put("/update/:id", withAuth, async (req, res) => {
+    console.log("-------in UDATE POST---------")
+
+    try {
+      const postData = await Post.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(postData);
+      if (!postData) {
+        res.status(404).json({ message: "Not exists " });
+        return;
+      }
+      res.status(200).json(postData);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+
 module.exports = router;

@@ -16,6 +16,36 @@ const deleteButtonHandler = async (event) => {
     }
   };
 
+  const editFormHandler = async (e) => {
+    e.preventDefault();
+  
+    const title = document.querySelector('#editpost-title').value.trim();
+    const post_content = document.querySelector('#editpost-content').value.trim();
+  
+    console.log(title, post_content);
+  
+    const url = new URL(document.location);
+    const post_id = url.pathname.split('/').pop();
+  
+    if (title && post_content) {
+      const response = await fetch(`/api/post/update/${post_id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ title, post_content }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        document.location.replace('/dashboard');
+      } else {
+        alert('Failed to create project');
+      }
+    }
+  };
+
   document.querySelectorAll('#delete').forEach((deleteButton) => {
     deleteButton.addEventListener('click', deleteButtonHandler);
   });
+  
+  document.querySelector('#update-post').addEventListener('click', editFormHandler);
